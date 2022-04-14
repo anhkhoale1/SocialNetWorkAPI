@@ -8,7 +8,7 @@ module.exports = class Users {
     this.run();
   }
 
-  run() {
+  create() {
     this.app.post('/users/', (req, res) => {
       try {
         const userModel = new this.UserModel(req.body);
@@ -31,23 +31,20 @@ module.exports = class Users {
 
         res.status(400).json({
           code: 400,
-          message: 'Bad Request'
+          message: 'Bad request to add an user'
         });
       }
     });
+  }
 
-    this.app.get('/users/id', ({ params }, res) => {
+  show() {
+    this.app.get('/user/:id', (req, res) => {
+      console.log(params);
       try {
-        const userModel = new this.UserModel(params.body);
-
-        userModel
-          .findOne({ 
-            _id : params.id 
-          })
+        this.userModel
+          .findById(req.params.id)
           .then((user) => {
-            res.status(200).json({
-              getUserById: `${user}`,
-            });
+            res.status(200).json(user);
         }).catch((err) => {
             res.status(400).json({
             message: `post:users -> ${err}`,
@@ -56,10 +53,67 @@ module.exports = class Users {
       } catch (err) {
         res.status(400).json({
           code: 400,
-          message: 'Bad Request'
+          message: 'Bad request to find a user'
         });
       }
     });
+  }
+
+  delete() {
+    this.app.delete('/user/:id', (req, res) => {
+      try {
+        this.UserModel.findOneAndDelete(req.params.id).then((user) => {
+          res.status(200).json(user || {})
+        }).catch((err) => {
+          res.status(400).json({
+            status: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        console.error(`[ERROR] delete:users/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
+  update() {
+    this.app.put('/user/:id', (req, res) => {
+      try {
+        const options = { new: true, runValidators: true };
+
+        this.UserModel.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          options
+        ).then((userUpdated) => {
+          res.status(200).json(userUpdated || {})
+        }).catch((err) => {
+          res.status(400).json({
+            status: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        console.error(`[ERROR] delete:users/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
+  run() {
+    this.create();
+    this.show();
+    this.delete();
+    this.update();
   }
     
 }
