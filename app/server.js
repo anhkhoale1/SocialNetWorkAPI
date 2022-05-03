@@ -22,7 +22,7 @@ module.exports = class Server {
     connect.on('error', (err) => {
       setTimeout(() => {
         console.log(`ERROR API Connect -> ${err}`);
-        this.connect = thsi.dbConnect(host);
+        this.connect = this.dbConnect(host);
       }, 5000);
     });
 
@@ -57,6 +57,7 @@ module.exports = class Server {
   routes() {
     new routes.Users(this.app, this.connect);
     new routes.Events(this.app, this.connect);
+    new routes.Groups(this.app, this.connect);
 
     this.app.use((req, res) => {
       res.status(404).json({
@@ -79,4 +80,4 @@ module.exports = class Server {
       console.error(`[ERROR] Server -> ${err}`);
     }
   }
-}
+}   

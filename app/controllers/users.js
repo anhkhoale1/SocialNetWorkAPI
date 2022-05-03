@@ -37,17 +37,17 @@ module.exports = class Users {
     });
   }
 
-  show() {
+  getUser() {
     this.app.get('/user/:id', (req, res) => {
-      console.log(params);
+      console.log(req.params.id);
       try {
-        this.userModel
+        this.UserModel
           .findById(req.params.id)
           .then((user) => {
             res.status(200).json(user);
         }).catch((err) => {
             res.status(400).json({
-            message: `post:users -> ${err}`,
+            message: `get:user -> ${err}`,
           });
         });
       } catch (err) {
@@ -63,7 +63,7 @@ module.exports = class Users {
     this.app.delete('/user/:id', (req, res) => {
       try {
         this.UserModel.findOneAndDelete(req.params.id).then((user) => {
-          res.status(200).json(user || {})
+          res.status(200).json({message: `user with id ${user.id} is deleted`})
         }).catch((err) => {
           res.status(400).json({
             status: 400,
@@ -71,7 +71,7 @@ module.exports = class Users {
           })
         })
       } catch (err) {
-        console.error(`[ERROR] delete:users/:id -> ${err}`)
+        console.error(`[ERROR] delete:user/:id -> ${err}`)
 
         res.status(500).json({
           status: 500,
@@ -99,7 +99,7 @@ module.exports = class Users {
           })
         })
       } catch (err) {
-        console.error(`[ERROR] delete:users/:id -> ${err}`)
+        console.error(`[ERROR] update:user/:id -> ${err}`)
 
         res.status(500).json({
           status: 500,
@@ -111,7 +111,7 @@ module.exports = class Users {
 
   run() {
     this.create();
-    this.show();
+    this.getUser();
     this.delete();
     this.update();
   }

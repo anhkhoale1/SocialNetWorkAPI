@@ -8,7 +8,7 @@ module.exports = class Events {
     this.run();
   }
 
-  run() {
+  create() {
     this.app.post('/events/', (req, res) => {
       try {
         const eventModel = new this.EventModel(req.body);
@@ -35,5 +35,10 @@ module.exports = class Events {
         });
       }
     });
+  }
+
+  run() {
+    this.create();
+
   }
 }
