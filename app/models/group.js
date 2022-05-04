@@ -1,16 +1,20 @@
 const {mongoose, Schema} = require('mongoose');
+const UserSchema = require('../models/user');
 
 const GroupSchema = new mongoose.Schema({
-  users: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  name : {
+    type: String,
     required: true
-  }],
-  admin: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  },
+  description : String,
+  users: {
+    type: [ UserSchema ],
     required: true
-  }]
+  },
+  admin: {
+    type : [ UserSchema ],
+    required: true
+  }
  },
 {
   collection: 'groups',
