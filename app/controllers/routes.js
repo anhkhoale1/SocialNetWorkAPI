@@ -1,6 +1,6 @@
-const Users = require('./users.js');
-const Events = require('./events.js');
-const Groups = require('./groups.js');
+const Users = require('./usersController.js');
+const Events = require('./eventsController.js');
+const Groups = require('./groupsController.js');
 
 module.exports = {
   Users,

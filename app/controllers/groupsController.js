@@ -1,4 +1,6 @@
 const GroupModel = require('../models/group.js');
+const multer  = require('multer');
+const upload = multer({ dest: 'images/' });
 
 module.exports = class Groups {
   constructor(app, connect) {
@@ -6,6 +8,16 @@ module.exports = class Groups {
     this.GroupModel = connect.model('Group', GroupModel);
 
     this.run();
+  }
+
+  image() {
+    this.app.post('/image/', (req, res) => {
+      try {
+        Image
+      }catch{
+
+      }
+    })
   }
 
   create() {

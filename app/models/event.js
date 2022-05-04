@@ -1,7 +1,14 @@
 const {mongoose, Schema} = require('mongoose');
 
 const EventSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
+  confidentiel: {
+    type: Boolean, // 1 = public, 0 = private
+    default: true
+  }, // 1 = public, 0  = private
   description: String,
   startDate: {
     type: Date,
@@ -15,7 +22,6 @@ const EventSchema = new mongoose.Schema({
   },
   lieu: String,
   photoProfil: String,
-  confidentiel: String,
   users: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
