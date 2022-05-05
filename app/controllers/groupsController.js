@@ -20,25 +20,25 @@ module.exports = class Groups {
 
       }
     })
-  };
+  }
 
   create() {
     this.app.post('/groups/', async (req, res) => {
       try {
-        for (let i = 0; i < Object.keys(req.body.users.id).length; i++) {
-          const id = req.body.users.id[i];
+        //check if user exists
+        for (let i = 0; i < Object.keys(req.body.users).length; i++) {
+          const id = req.body.users[i];
           await axios.get(`http://localhost:3000/user/${id}`)
           .catch(() => 
-            req.body.users.id.splice(i, 1),
-            console.error(`user with id ${id} doesnt exist, so he is removed from request`)
+            req.body.users.splice(i, 1)
           )
         }
-        for (let i = 0; i < Object.keys(req.body.admin.id).length; i++) {
-          const id = req.body.admin.id[i];
+        //check if admin exists
+        for (let i = 0; i < Object.keys(req.body.admin).length; i++) {
+          const id = req.body.admin[i];
           await axios.get(`http://localhost:3000/user/${id}`)
           .catch(() => 
-            req.body.admin.id.splice(i, 1),
-            console.error(`admin with id ${id} doesnt exist, so he is removed from request`)
+            req.body.admin.splice(i, 1)
           )
         }
         
@@ -66,9 +66,81 @@ module.exports = class Groups {
     });
   }
 
+  delete() {
+    this.app.delete('/group/:id', (req, res) => {
+      try {
+        this.GroupModel.findOneAndDelete(req.params.id).then((group) => {
+          res.status(200).json({message: `group with id ${group.id} is deleted`})
+        }).catch((err) => {
+          res.status(400).json({
+            status: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        console.error(`[ERROR] delete:group/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
+  update() {
+    this.app.put('/group/:id', (req, res) => {
+      try {
+        const options = { new: true, runValidators: true };
+
+        this.GroupModel.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          options
+        ).then((groupUpdated) => {
+          res.status(200).json(groupUpdated || {})
+        }).catch((err) => {
+          res.status(400).json({
+            status: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        console.error(`[ERROR] update:group/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
+  get() {
+    this.app.get('/group/:id', (req, res) => {
+      try {
+        this.GroupModel
+          .findById(req.params.id)
+          .then((group) => {
+            res.status(200).json(group);
+        }).catch((err) => {
+            res.status(400).json({
+            message: `get:group -> ${err}`,
+          });
+        });
+      } catch (err) {
+        res.status(400).json({
+          code: 400,
+          message: 'Bad request to find a group'
+        });
+      }
+    });
+  }
 
   run() {
     this.create();
-
+    this.get();
+    this.delete();
+    this.update();
   }
 }

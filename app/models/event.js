@@ -9,7 +9,7 @@ const EventSchema = new mongoose.Schema({
   confidentiel: {
     type: Boolean, // 1 = public, 0 = private
     default: true
-  }, // 1 = public, 0  = private
+  },
   description: String,
   startDate: {
     type: Date,
@@ -24,7 +24,7 @@ const EventSchema = new mongoose.Schema({
   lieu: String,
   photoProfil: String,
   users: [{
-    type: [ UserSchema ],
+    type: Object,
   }],
  },
 {

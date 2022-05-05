@@ -113,6 +113,5 @@ module.exports = class Users {
     this.getUser();
     this.delete();
     this.update();
-  }
-    
+  } 
 }
