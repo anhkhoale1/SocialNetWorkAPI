@@ -1,80 +1,531 @@
 FORMAT: 1A
-HOST: https://polls.apiblueprint.org/
+HOST: http://localhost:3000
 
-# Anh Khoa Le
+# API - Social Network
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+**Allowed HTTPs requests:**
 
-## Questions Collection [/questions]
+`POST` : To create resource
 
-### List All Questions [GET]
+`GET` : Get a resource or all resources
+
+`UPDATE` : Update resource
+
+`DELETE` : Delete resource
+
+` `
+
+**Description Of Usual Server Response**
+
+`200` OK : the request was successful.
+
+`400` Bad request : the request could not be understood or was missing a required parameters.
+
+`404` Nout Found : resources was not found.
+
+`500` Internal server error
+
+##User [/users]
+###Create a User [POST]
+
++ Request (application/json) 
+
+    + Body
+    
+            {
+                "firstname" : "anhkhoa",
+                "lastname" : "toto",
+                "username" : "asdf",
+                "password" : "sdfadsf",
+                "email" : "sasdfaaadfdsff@gmail.com"
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message" : "user created"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### View a User Detail [GET/user/{id}]
+
++ Parameters
+    + id (required) - ID of the user in the form of an String
 
 + Response 200 (application/json)
 
-        [
+    + Body
+    
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "firstname": "anhkhoa",
+                "lastname": "toto",
+                "username": "asdf",
+                "password": "sdfadsf",
+                "email": "saf@gmail.com",
+                "group": [],
+                "id": "626fef0eac366aa288018e19"
             }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
+            
++ Response 400 (application/json)
 
     + Body
-
+    
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### Delete a User [DELETE/user/{id}]
+
++ Parameters
+    + id (required) - ID of the user in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "user is deleted",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+
+### Update a User [PUT/user/{id}]
+
++ Parameters
+    + id (required) - ID of the user in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "user is updated",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+
+##Events [/events]
+###Create a Event [POST]
+
++ Request (application/json) 
+
+    + Body
+    
+            {
+                "name" : "facebook",
+                "description" : "",
+                "startDate" : "",
+                "endDate" : "",
+                "lieu" : "",
+                "users" : [
+                    "575d0c22964d3b6ba41bedas",
+                    "626feef9ac366aa288018e17",
+                    "626fef0eac366aa288018e19"
+                    ],
+                "confidentiel" : 0
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message" : "event created"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### View a Event Detail [GET/event/{id}]
+
++ Parameters
+    + id (required) - ID of the event in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "name": "facebook",
+                "confidentiel": false,
+                "description": "",
+                "startDate": null,
+                "endDate": null,
+                "lieu": "",
+                "users": [
+                    "626feef9ac366aa288018e17",
+                    "626fef0eac366aa288018e19"
+                ],
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### Delete a Event [DELETE/user/{id}]
+
++ Parameters
+    + id (required) - ID of the event in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "event is deleted",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+
+### Update a Event [PUT/user/{id}]
+
++ Parameters
+    + id (required) - ID of the event in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "event is updated",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+##Groups [/groups]
+###Create a group [POST]
+
++ Request (application/json) 
+
+    + Body
+    
+            {
+                "name" : "group 6",
+                "users" : [
+                    "575d0c22964d3b6ba41bedas",
+                    "626feef9ac366aa288018e17",
+                    "626fef0eac366aa288018e19"
+                ], 
+                "admin" : [
+                    "575d0c22964d3b6ba41bedas",
+                    "626feef9ac366aa288018e17",
+                    "626fef0eac366aa288018e19"
                 ]
+            }
+                        
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message" : "group created"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### View a Group Detail [GET/group/{id}]
+
++ Parameters
+    + id (required) - ID of the group in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "users": [],
+                "admin": [
+                    "6256a4a2278438fc9b852cb4"
+                ],
+                "id": "6270305f5270a1f2f7f9d76e"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### Delete a Group [DELETE/group/{id}]
+
++ Parameters
+    + id (required) - ID of the group in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "group is deleted",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+
+### Update a Group [PUT/group/{id}]
+
++ Parameters
+    + id (required) - ID of the goup in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "group is updated",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
             }
