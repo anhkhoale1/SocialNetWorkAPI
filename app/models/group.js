@@ -1,5 +1,4 @@
 const {mongoose, Schema} = require('mongoose');
-const UserSchema = require('../models/user');
 
 const GroupSchema = new mongoose.Schema({
   name : {
@@ -8,11 +7,11 @@ const GroupSchema = new mongoose.Schema({
   },
   description : String,
   users: {
-    type: [ UserSchema ],
+    type: Object,
     required: true
   },
   admin: {
-    type : [ UserSchema ],
+    type: Object,
     required: true
   }
  },

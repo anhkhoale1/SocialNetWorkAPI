@@ -58,6 +58,8 @@ module.exports = class Server {
     new routes.Users(this.app, this.connect);
     new routes.Events(this.app, this.connect);
     new routes.Groups(this.app, this.connect);
+    new routes.Discussions(this.app, this.connect);
+    new routes.Sondages(this.app, this.connect);
 
     this.app.use((req, res) => {
       res.status(404).json({

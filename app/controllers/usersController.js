@@ -39,7 +39,6 @@ module.exports = class Users {
 
   getUser() {
     this.app.get('/user/:id', (req, res) => {
-      console.log(req.params.id);
       try {
         this.UserModel
           .findById(req.params.id)

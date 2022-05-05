@@ -11,15 +11,15 @@ module.exports = class Discussions {
   create() {
     this.app.post('/discussion/', (req, res) => {
       try {
-        const groupModel = new this.GroupModel(req.body);
+        const discussionModel = new this.DiscussionModel(req.body);
 
-        groupModel
+        discussionModel
         .save()
-        .then((group) => {
+        .then((discussion) => {
           res.status(200).json({
-            message: `group ${group.name} created !`,
+            message: `discussion ${discussion.name} created !`,
           });
-          console.log(`group ${group.name} created !`);
+          console.log(`discussion ${discussion.name} created !`);
         }).catch((err) => {
           console.error(`post:discussion -> ${err}`)
           res.status(400).json({

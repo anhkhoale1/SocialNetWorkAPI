@@ -1,4 +1,5 @@
 const {mongoose, Schema} = require('mongoose');
+const UserSchema = require('../models/user');
 
 const EventSchema = new mongoose.Schema({
   name: {
@@ -23,8 +24,7 @@ const EventSchema = new mongoose.Schema({
   lieu: String,
   photoProfil: String,
   users: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: [ UserSchema ],
   }],
  },
 {
