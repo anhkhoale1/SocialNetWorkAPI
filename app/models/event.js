@@ -6,6 +6,10 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  group: {
+    type : Object,
+    required : true
+  },
   confidentiel: {
     type: Boolean, // 1 = public, 0 = private
     default: true
@@ -24,6 +28,9 @@ const EventSchema = new mongoose.Schema({
   lieu: String,
   photoProfil: String,
   users: [{
+    type: Object,
+  }],
+  owners: [{
     type: Object,
   }],
  },

@@ -41,7 +41,7 @@ module.exports = class Groups {
             req.body.admin.splice(i, 1)
           )
         }
-        
+
         const groupModel = new this.GroupModel(req.body);
         groupModel
         .save()
@@ -131,7 +131,7 @@ module.exports = class Groups {
       } catch (err) {
         res.status(400).json({
           code: 400,
-          message: 'Bad request to find a group'
+          message: 'Bad request'
         });
       }
     });

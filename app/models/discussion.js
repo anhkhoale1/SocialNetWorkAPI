@@ -9,13 +9,14 @@ const DiscussionSchema = new mongoose.Schema({
     required: true
   },
   messages: {
-    type : [ UserSchema ]
+    sentBy : Object,
+    content: String
   },
   attendee: {
-    type : [ UserSchema ]
+    type : Object
   },
   admin : {
-    type : [ UserSchema ]
+    type : Object
   }
  },
 {

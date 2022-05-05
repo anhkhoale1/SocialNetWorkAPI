@@ -20,6 +20,19 @@ module.exports = class Events {
             req.body.users.splice(i, 1)
           )
         }
+        //check if owner exists
+        for (let i = 0; i < Object.keys(req.body.owners).length; i++) {
+          const id = req.body.owners[i];
+          await axios.get(`http://localhost:3000/user/${id}`)
+          .catch(() => 
+            req.body.owners.splice(i, 1)
+          )
+        }
+        //check if group exists
+        // await axios.get(`http://localhost:3000/group/${req.body.group}`)
+        // .catch((err) => {
+        //   console.log(err)
+        // })
 
         const eventModel = new this.EventModel(req.body);
 
@@ -118,10 +131,46 @@ module.exports = class Events {
     })
   }
 
+  changeStatus() {
+    this.app.patch('/event/:id', async (req, res) => {
+      try {
+        const options = { new: true, runValidators: true };
+        let currStatus = false;
+
+        await axios.get(`http://localhost:3000/event/${req.params.id}`)
+        .then((response) => {
+          currStatus = !response.data.confidentiel;
+        })
+
+        this.EventModel.findByIdAndUpdate(
+          req.params.id,
+          {"confidentiel" : `${currStatus}`},
+          options
+        ).then((eventUpdated) => {
+          // console.log(eventUpdated);
+          res.status(200).json(eventUpdated || {})
+        }).catch((err) => {
+          res.status(400).json({
+            status: 400,
+            message: err
+          })
+        })
+      } catch (err) {
+        console.error(`[ERROR] update:event/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
   run() {
     this.create();
     this.get();
     this.delete();
     this.update();
+    this.changeStatus();
   }
 }

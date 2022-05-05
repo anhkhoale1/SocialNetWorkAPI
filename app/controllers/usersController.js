@@ -31,7 +31,7 @@ module.exports = class Users {
 
         res.status(400).json({
           code: 400,
-          message: 'Bad request to add an user'
+          message: 'Bad request'
         });
       }
     });
