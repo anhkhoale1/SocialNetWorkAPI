@@ -137,10 +137,58 @@ module.exports = class Groups {
     });
   }
 
+  allowToPost() {
+    this.app.patch('/group/allowToPost/:id', async (req, res) => {
+      try {
+        let usersAllowedToPost = [];
+
+        await axios.get(`http://localhost:3000/group/${req.params.id}`)
+        .then((response) => {
+          for( let i = 0; i < req.body.id.length; i++){
+            usersAllowedToPost.push(req.body.id[i]);
+          }
+          res.status(200).json(`message: users ${usersAllowedToPost} updated`)
+        })
+      } catch (err) {
+        console.error(`[ERROR] patch:event/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
+  allowToCreateEvent() {
+    this.app.options('/group/allowToCreateEvent/:id', async (req, res) => {
+      try {
+        let allowToCreateEvent = [];
+
+        await axios.get(`http://localhost:3000/group/${req.params.id}`)
+        .then((response) => {
+          for( let i = 0; i < req.body.id.length; i++){
+            allowToCreateEvent.push(req.body.id[i]);
+          }
+          res.status(200).json(`message: users ${allowToCreateEvent} updated`)
+        })
+      } catch (err) {
+        console.error(`[ERROR] options:event/:id -> ${err}`)
+
+        res.status(500).json({
+          status: 500,
+          message: 'Internal Server Error'
+        })
+      }
+    })
+  }
+
   run() {
     this.create();
     this.get();
     this.delete();
     this.update();
+    this.allowToPost();
+    this.allowToCreateEvent()
   }
 }
