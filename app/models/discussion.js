@@ -4,14 +4,16 @@ const GroupSchema = require('../models/group');
 const EventSchema = require('../models/event');
 
 const DiscussionSchema = new mongoose.Schema({
+  name : {
+    type: String
+  },
   where : {
-    type : [ GroupSchema || EventSchema ],
+    type : Object,
     required: true
   },
-  messages: {
-    sentBy : Object,
-    content: String
-  },
+  messages: [{
+    type : String,
+  }],
   attendee: {
     type : Object
   },
