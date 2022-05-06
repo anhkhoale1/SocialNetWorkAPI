@@ -529,3 +529,171 @@ HOST: http://localhost:3000
             {
                 "message" : "Internal server error"
             }
+            
+##Discussions [/discussion]
+###Create a Discussion [POST]
+
++ Request (application/json) 
+
+    + Body
+    
+            {
+                "name" : "Group chat MDS",
+                "where" : "62738191feac697fa82fd866",
+                "messages" :[
+                    "Hello, how are you?",
+                    "Im fine"
+                ],
+                "attendee" : "626fef14ac366aa288018e1b",
+                "admin" : "62724a9298eff87da070a98f"
+            }
+                        
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message" : "discussion created"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### View a Discussion Detail [GET/discussion/{id}]
+
++ Parameters
+    + id (required) - ID of the discussion in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+           {
+                "name": "Group chat MDS",
+                "where": "62738191feac697fa82fd866",
+                "messages": [
+                    "Bonjour, comment ca va"
+                ],
+                "attendee": "626fef14ac366aa288018e1b",
+                "admin": "62724a9298eff87da070a98f",
+                "id": "6275106a3bc7fd13867249b7"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+            
+### Delete a Discussion [DELETE/discussion/{id}]
+
++ Parameters
+    + id (required) - ID of the discussion in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "discussion is deleted",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
+
+### Update a Discussion [PUT/discussion/{id}]
+
++ Parameters
+    + id (required) - ID of the discussion in the form of an String
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "message": "discussion is updated",
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Bad request"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Not found"
+            }
+
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message" : "Internal server error"
+            }
